@@ -1,4 +1,4 @@
-import { connection as pool } from '../config/db.js';
+import pool from '../config/db.js'
 
 const categoriaModel = {
 
@@ -7,35 +7,30 @@ const categoriaModel = {
     const [rows] = await pool.query(sql);
     return rows;
   },
-
-  selectByIdCategoria: async (id) => {
-    const sql = 'SELECT * FROM categorias WHERE id = ?;';
-    const [rows] = await pool.query(sql, [id]);
+  selectByIdCategoria: async (pIdCategoria) => {
+    const sql = "SELECT * FROM categorias WHERE idCategoria = ?;";
+    const values = [pIdCategoria];
+    const [rows] = await pool.query(sql, values);
     return rows;
   },
-
-  insertCategoria: async (nome, descricao) => {
-    const sql = 'INSERT INTO categorias (nome, descricao) VALUES (?, ?);';
-    const [result] = await pool.query(sql, [nome, descricao]);
-    return result;
+  insertCategoria: async (pDescricaoCategoria) => {
+    const sql = "INSERT INTO categorias(descricaoCategoria) VALUES (?);";
+    const values = [pDescricaoCategoria];
+    const [rows] = await pool.query(sql, values);
+    return { rows };
   },
-
-  updateCategoria: async (id, nome, descricao) => {
-    const sql = `
-      UPDATE categorias
-      SET nome = ?, descricao = ?
-      WHERE id = ?;
-    `;
-    const [result] = await pool.query(sql, [nome, descricao, id]);
-    return result;
+  updateCategoria: async (pIdCategoria, pDescricaoCategoria) => {
+    const sql = 'UPDATE categorias SET descricaoCategoria=? WHERE idCategoria=?;';
+    const values = [pIdCategoria, pDescricaoCategoria];
+    const [rows] = await pool.query(sql, values);
+    return rows;
   },
-
-  deleteCategoria: async (id) => {
-    const sql = 'DELETE FROM categorias WHERE id = ?;';
-    const [result] = await pool.query(sql, [id]);
-    return result;
-  }
-
-};
+  deleteCategoria: async (pIdCategoria) => {
+    const sql = "DELETE FROM categorias WHERE idCategoria = ? ;";
+    const values = [pIdCategoria];
+    const [rows] = await pool.query(sql, values);
+    return rows;
+  },
+}
 
 export default categoriaModel;
