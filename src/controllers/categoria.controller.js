@@ -22,10 +22,7 @@ const categoriaController = {
         return res.status(400).json({ message: "Verifique os dados enviados e tente novamente" });
       }
       const resultado = await categoriaModel.insertCategoria(descricaoCategoria);
-      const produtos = resultado.map(produto => ({
-        ...produto,
-        imagemUrl: `http://localhost:8000/uploads/${produto.imagem}`
-      }));
+
       res.status(201).json({ message: "Registro incluído com sucesso", data: resultado });
     } catch (error) {
       console.error(error);
