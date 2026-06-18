@@ -26,10 +26,6 @@ const produtoController = {
             if (req.files) {
                 return res.status(400).json({ message: "O arquivo não foi enviado" });
             }
-            const produtosImagem = resultado.map(produto => ({
-                ...produto,
-                imagemUrl: `http://localhost:3000/uploads/${produto.imagem}`
-            }));
             const resultado = await produtoModel.insertProdutos(
                 idCategoria,
                 nomeProduto,
@@ -37,7 +33,7 @@ const produtoController = {
                 filename);
 
 
-            res.status(201).json({ message: "Registro incluído com sucesso", data: resultado, imagens: produtosImagem });
+            res.status(201).json({ message: "Registro incluído com sucesso", data: resultado });
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: "Ocorreu um erro no servidor", errorMessage: error.message });
@@ -60,7 +56,7 @@ const produtoController = {
             const novoIdCategoria = idCategoria ?? produtoAtual[0].idCategoria;
             const novaNomeProduto = nomeProduto ?? produtoAtual[0].nomeProduto;
             const novoValorProduto = valorProduto ?? produtoAtual[0].valorProduto;
-            const resultUpdateProdutos = await produtoModel.updateProduto(novoIdCategoria, novaNomeProduto, novoValorProduto);
+            const resultUpdateProdutos = await produtoModel.updateProduto( novoIdCategoria, novaNomeProduto, novoValorProduto);
             if (resultUpdateProdutos.affectedRows === 1 && resultUpdateProdutos.changedRows === 0) {
                 return res.status(200).json({ message: 'Nenhuma alteração foi realizada' });
             }
