@@ -1,4 +1,3 @@
-import categoriaModel from '../models/categoria.model.js';
 import produtoModel from '../models/produto.model.js';
 
 const produtoController = {
@@ -24,12 +23,9 @@ const produtoController = {
                 !idCategoria || !nomeProduto || !valorProduto) {
                 return res.status(400).json({ message: "Verifique os dados enviados e tente novamente" });
             }
-
-
             if (req.files) {
                 return res.status(400).json({ message: "O arquivo não foi enviado" });
             }
-
             const resultado = await produtoModel.insertProdutos(
                 idCategoria,
                 nomeProduto,
