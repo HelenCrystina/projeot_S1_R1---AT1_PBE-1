@@ -58,7 +58,7 @@ export async function initializeDatabase() {
 
 
         await tempConnection.query(`
-                CREATE TABLE categorias (
+                 CREATE TABLE IF NOT EXISTS categorias (
                     idCategoria INT PRIMARY KEY AUTO_INCREMENT,
                     descricaoCategoria VARCHAR(50) NOT NULL,
                     dataCad TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -67,7 +67,7 @@ export async function initializeDatabase() {
 
 
         await tempConnection.query(`
-            CREATE TABLE produtos (
+             CREATE TABLE IF NOT EXISTS produtos (
                 idProduto INT PRIMARY KEY AUTO_INCREMENT,
                 idCategoria INT NOT NULL,
                 nomeProduto VARCHAR(50) NOT NULL,
